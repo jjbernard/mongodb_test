@@ -6,7 +6,7 @@ class Snake:
     name = None
     is_venomous = None
 
-   meta = {
-       'db_alias': 'core',
-       'collection': 'snakes'
-   }
+    meta = {
+        'db_alias': 'core',
+        'collection': 'snakes'
+     }

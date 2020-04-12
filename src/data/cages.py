@@ -10,7 +10,7 @@ class Cage:
 
     bookings = list()
 
-   meta = {
-       'db_alias': 'core',
-       'collection': 'cages'
-   }
+    meta = {
+        'db_alias': 'core',
+        'collection': 'cages'
+    }
