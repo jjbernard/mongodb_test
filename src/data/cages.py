@@ -3,9 +3,9 @@ import datetime
 
 from data.bookings import Booking
 
-class Cage(mongoengine.Document):
-    registered_date = mongoengine.DateTimeField(datetime.datetime.now)
 
+class Cage(mongoengine.Document):
+    registered_date = mongoengine.DateTimeField(default=datetime.datetime.now)
     name = mongoengine.StringField(required=True)
     price = mongoengine.FloatField(required=True)
     square_meters = mongoengine.FloatField(required=True)
@@ -13,7 +13,6 @@ class Cage(mongoengine.Document):
     has_toys = mongoengine.BooleanField(required=True)
     allow_dangerous_snake = mongoengine.BooleanField(default=False)
 
-    # Need to import Booking class after it is created
     bookings = mongoengine.EmbeddedDocumentListField(Booking)
 
     meta = {
