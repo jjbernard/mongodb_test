@@ -1,9 +1,9 @@
 from colorama import Fore
 from dateutil import parser
-
 from infrastructure.switchlang import switch
 import infrastructure.state as state
 import services.data_service as svc
+import datetime
 
 
 def run():
@@ -162,11 +162,25 @@ def update_availability():
 def view_bookings():
     print(' ****************** Your bookings **************** ')
 
-    # TODO: Require an account
-    # TODO: Get cages, and nested bookings as flat list
-    # TODO: Print details for each
+    if not state.active_account:
+        error_msg('You must login first to view the bookings of your cages.')
+        return
 
-    print(" -------- NOT IMPLEMENTED -------- ")
+    cages = svc.find_cages_for_user(state.active_account)
+
+    bookings = [
+        (c, b)
+        for c in cages
+        for b in c.bookings
+        if b.booked_date is not None
+    ]
+
+    print(f"You have {len(bookings)} bookings.")
+    for c, b in bookings:
+        print(f" * Cage: {c.name}, "
+              f"booked date: {(datetime.date(b.booked_date.year, b.booked_date.month, b.booked_date.day))}, "
+              f"from {(datetime.date(b.check_in_date.year, b.check_in_date.month, b.check_in_date.day))} "
+              f"for {b.duration_in_days} days.")
 
 
 def exit_app():
